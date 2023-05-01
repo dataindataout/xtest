@@ -12,7 +12,7 @@
 # assumptions
 
 - this works on mac apple m1, may or may not work on other OS
-- current scenarios assume version 2.16
+- current scenarios assume version 2.17 (see other branches for previous versions)
 - you should be using 2.17+ for xcluster
 - placement says "gcp" as an example; does not actually deploy to gcp
 
