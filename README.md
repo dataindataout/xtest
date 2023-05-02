@@ -6,14 +6,14 @@
 # prereqs
 
 - a copy of yugabytedb
-- set your path to include the bin folder within the yugabytedb directory
+- set your path to include the bin folder within the yugabytedb directory of the correct version
 - set local ips for 6 nodes via set_ips.sh (127.0.01 - 127.0.0.6)
 
 # assumptions
 
 - this works on mac apple m1, may or may not work on other OS
 - current scenarios assume version 2.16
-- you should be using 2.17+ for xcluster
+- you should be using 2.17+ for xcluster, though
 - placement says "gcp" as an example; does not actually deploy to gcp
 
 # xcluster scenarios

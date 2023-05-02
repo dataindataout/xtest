@@ -17,11 +17,25 @@ yb-admin --master_addresses 127.0.0.4:7100,127.0.0.5:7100,127.0.0.6:7100 set_uni
 ysqlsh -h 127.0.0.1 -c "drop table if exists table2"
 ysqlsh -h 127.0.0.4 -c "drop table if exists table2"
 
-# start replication
-yb-admin --master_addresses 127.0.0.1:7100,127.0.0.2:7100,127.0.0.3:7100 set_universe_replication_enabled $westid"_"$replication_name 1
-yb-admin --master_addresses 127.0.0.4:7100,127.0.0.5:7100,127.0.0.6:7100 set_universe_replication_enabled $eastid"_"$replication_name 1
+# destroy mytable2 replication configuration
+tableid=$(yb-admin \
+    --master_addresses 127.0.0.1:7100,127.0.0.2:7100,127.0.0.3:7100 \
+    list_tables include_table_id | grep mytable2 | awk -F ' ' '{print $2}')
+replication_name="mytable2"
 
-# add a row
+yb-admin \
+  --master_addresses 127.0.0.4:7100,127.0.0.5:7100,127.0.0.6:7100 \
+  delete_universe_replication $eastid"_"$replication_name \
+    127.0.0.1:7100,127.0.0.2:7100,127.0.0.3:7100 \
+    $tableid
+
+yb-admin \
+  --master_addresses 127.0.0.1:7100,127.0.0.2:7100,127.0.0.3:7100 \
+  delete_universe_replication $westid"_"$replication_name \
+    127.0.0.4:7100,127.0.0.5:7100,127.0.0.6:7100 \
+    $tableid
+
+# add a row to other table to ensure replication is still working for it
 ysqlsh -h 127.0.0.1 -c "INSERT INTO milliontable (name, age) SELECT substr(md5(random()::text), 1, 10), (random() * 70 + 10)::integer"
 
 # count the rows on both sides

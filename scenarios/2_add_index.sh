@@ -1,7 +1,7 @@
 #!/bin/bash
 # file: add_index.sh
 
-# you don't have to stop replication for this one
+# you don't have to pause replication for this one
 # so I'm not doing that here, as an example
 
 # add index on both sides
