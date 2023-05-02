@@ -10,4 +10,4 @@ mkdir /tmp/data6
 mkdir /tmp/data7
 mkdir /tmp/data8
 
-# ./set_ips.sh
+./set_ips.sh
